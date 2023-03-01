@@ -87,4 +87,23 @@ class Solution {
 }
   
   // BST pre order
-  
+  class Solution {
+    public int rangeSumBST(TreeNode root, int low, int high) {
+        int result = 0;
+        Stack<TreeNode> st = new Stack<>();
+        while(root != null || !st.isEmpty()){
+            if(root != null){
+                if(root.val < high)
+                    st.push(root.right);
+                if(root.val > low)
+                    st.push(root.left);
+                if(root.val >= low && root.val <= high){
+                    result += root.val;
+                }
+            }
+            root = st.pop();
+        }
+        return result;
+    }
+   
+}
