@@ -107,3 +107,42 @@ class Solution {
     }
    
 }
+//BST post order
+    class Solution {
+    public int rangeSumBST(TreeNode root, int low, int high) {
+        if(root == null) return 0;
+        Stack<TreeNode> st = new Stack<>();
+        st.push(root);
+        int result = 0;
+        TreeNode prev = null;
+        while(!st.isEmpty()){
+            TreeNode curr = st.peek();
+            if(prev == null || prev.left == curr || prev.right == curr){
+                if(curr.left != null && curr.val > low)
+                    st.push(curr.left);
+                else if(curr.right != null && curr.val < high)
+                    st.push(curr.right);
+                else{
+                    st.pop();
+                    if(curr.val >= low && curr.val <= high)
+                        result += curr.val;
+                } 
+            }else if(curr.left == prev){
+                if(curr.right != null && curr.val < high)
+                    st.push(curr.right);
+                else{
+                    st.pop();
+                    if(curr.val >= low && curr.val <= high)
+                        result += curr.val;
+                } 
+            }else if(curr.right == prev){
+                st.pop();
+                if(curr.val >= low && curr.val <= high)
+                    result += curr.val;
+            }
+            prev = curr;
+        }
+        return result;
+    }
+   
+}
